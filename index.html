@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Header Bar Example</title>
+  <style>
+    /* Reset default margin and padding */
+    body, h1, h2, h3, p, ul, li {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Ensure proper viewport scaling */
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Adjust padding for smaller screens */
+@media (max-width: 1200px) {
+  main {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+}
+
+@media (max-width: 992px) {
+  main {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+/* Mobile-Friendly Adjustments */
+@media (max-width: 768px) {
+  body {
+    padding-top: 50px; /* Adjust for fixed header */
+  }
+
+  /* Make navigation mobile-friendly */
+  nav ul {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  nav ul li {
+    padding: 10px;
+  }
+
+  /* Reduce hero image height for smaller screens */
+  .full-width-hero {
+    height: 400px;
+  }
+
+  /* Reduce text size in overlay */
+  .image-overlay p {
+    font-size: 18px;
+  }
+
+  .image-overlay button {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
+  /* Stack sections for smaller screens */
+  section {
+    flex-direction: column !important;
+    text-align: center;
+  }
+
+  /* Adjust section images */
+  section img {
+    width: 90%;
+    max-width: 300px;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  /* Adjust section text */
+  section .content {
+    padding: 20px;
+  }
+
+  /* Footer adjustments */
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-section {
+    text-align: center;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Reduce header font size */
+  nav ul li a {
+    font-size: 16px;
+  }
+
+  /* Adjust overlay text and button */
+  .image-overlay p {
+    font-size: 16px;
+  }
+
+  .image-overlay button {
+    font-size: 14px;
+    padding: 8px 15px;
+  }
+
+  /* Adjust footer text */
+  .footer-bottom p {
+    font-size: 12px;
+  }
+}
+
+
+    /* Basic body styling */
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      padding-top: 60px; /* To account for the fixed header */
+      margin-bottom: 0; /* Remove any bottom margin */
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* Ensure full height */
+    }
+
+    /* Background image div */
+    .background-image {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('images/img1.jpg'); /* Replace with your image URL */
+      background-size: cover;
+      background-position: center;
+      z-index: -1;
+      background-blend-mode: lighten;
+    }
+
+    /* Header styling */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #00b4d8;
+      color: white;
+      padding: 5px 0;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      height: 70px;
+    }
+
+    /* Logo styling */
+    .logo {
+      height: 65px; /* Same as the header height */
+      width: 70px; /* Adjust width proportionally */
+      background-color: white;
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #00b4d8;
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* Navigation bar styling */
+    nav {
+      display: flex;
+      justify-content: center;
+      flex: 1;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li {
+      padding: 10px 20px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: #ffcc00;
+    }
+
+    /* Active menu item styling */
+    nav ul li a.active {
+      color: #ffcc00;
+      font-weight: bold;
+    }
+
+    /* Full-width image container */
+    .full-width-hero {
+      position: relative;
+      width: 100%;
+      height: 800px;
+    }
+
+    .full-width-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Overlay text and button */
+    .image-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+      max-width: 80%;
+    }
+
+    .image-overlay p {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .image-overlay button {
+      background-color: #ffcc00;
+      color: #4e0374;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .image-overlay button:hover {
+      background-color: #e6b800;
+    }
+
+    /* Main content styling */
+    main {
+      flex: 1; /* Pushes the footer to the bottom */
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.85);
+      width: 100%;
+      box-sizing: border-box;
+      padding-left: 120px;
+      padding-right: 120px;
+    }
+
+    section {
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    section:nth-child(odd) {
+      flex-direction: row;
+    }
+
+    section:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    /* Increased image size in sections */
+    section img {
+      width: 400px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    section .content {
+      flex: 1;
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    h2 {
+      color: #90e0ef;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    /* Footer styling */
+    footer {
+      background: linear-gradient(360deg, #ced8da, #48cae4);
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-section {
+      flex: 1;
+      min-width: 200px;
+      text-align: left;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 15px;
+      font-size: 20px;
+      color: #ffcc00;
+    }
+
+    .footer-section p {
+      margin: 5px 0;
+      color: white;
+    }
+
+    .footer-section a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: #ffcc00;
+    }
+
+    /* Footer Bottom - Full width at the bottom */
+    .footer-bottom {
+      background-color: #00b4d8;
+      color: white;
+      text-align: center;
+      width: 100%;
+      padding: 8px 0;
+      font-size: 14px;
+      margin-top: auto; /* Pushes footer-bottom to the end */
+      box-sizing: border-box;
+    }
+
+    .footer-bottom p {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>  
+  <!-- Header -->
+  <header>
+    <div class="logo"><img src="images/logoproj.png" alt="Logo"></div>
+    <nav>
+      <ul>
+        <li><a href="#expertise" class="active">Expertise</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#why-us">Why Us</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Full-width hero image -->
+  <div class="full-width-hero">
+    <img src="images/img7.jpeg" alt="Full Width Image">
+    <div class="image-overlay">
+      <p>Start your health prediction journey today!</p>
+      <button class="start-btn" onclick="window.location.href='samplehome.html'">Start Now</button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Expertise Section -->
+    <section id="expertise">
+      <img src="images/img2.jpg" alt="Expertise Image">
+      <div class="content">
+        <h2>Expertise</h2>
+        <p>HealthSense AI predicts heart disease, pneumonia, malaria, and Parkinson's using advanced machine learning.</p>
+        <p> Early detection for better healthcare outcomes.</p>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials">
+      <img src="images/img1.jpg" alt="Testimonials Image">
+      <div class="content">
+        <h2>Testimonials</h2>
+        <p>Our users trust HealthSense AI for accurate disease predictions, just upload or enter your data and get instant results.</p>
+        <p>Trusted by users and healthcare experts for precise predictions in heart, pneumonia, malaria, and Parkinson's.</p>
+      </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section id="why-us">
+      <img src="images/img4.jpg" alt="Why Us Image">
+      <div class="content">
+        <h2>Why Us</h2>
+        <p>HealthSense AI combines advanced machine learning with medical expertise to deliver fast and accurate disease predictions.                                                                 </p>
+        <p>Our AI-powered platform ensures reliable results, empowering you to take control of your health with confidence.</p>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+      <img src="images/img6.jpg" alt="About Image">
+      <div class="content">
+        <h2>About</h2>
+        <p>We're revolutionizing business operations with innovative solutions. Our mission is to empower client success.</p>
+        <p>Built on integrity and transparency, we deliver value through our talented team and strong client relationships.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <!-- Contact Section -->
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p>Email: <a href="mailto:info@example.com">healthsenseai@gmail.com</a></p>
+        <p>Phone: +1 (123) 456-7890</p>
+        <p>Address: Sant Tukaram Nagar, Pimpri, Pune</p>
+      </div>
+
+      <!-- Quick Links Section -->
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <p><a href="#expertise">Expertise</a></p>
+        <p><a href="#testimonials">Testimonials</a></p>
+        <p><a href="#why-us">Why Us</a></p>
+        <p><a href="#about">About</a></p>
+      </div>
+
+      <!-- Social Media Section -->
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <p><a href="#">Facebook</a></p>
+        <p><a href="#">Twitter</a></p>
+        <p><a href="#">LinkedIn</a></p>
+        <p><a href="#">Instagram</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <p>&copy; 2023 HealthSense Ai. All rights reserved.</p>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    function startPrediction() {
+      alert("Starting your prediction journey!");
+    }
+  </script>
+</body>
+</html>
