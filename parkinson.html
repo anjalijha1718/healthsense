@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthSense AI - Parkinson's Detection</title>
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            padding-top: 80px; /* Space for fixed header */
+        }
+
+        /* Top Navigation Bar - Same as home page */
+        .top-bar {
+            background-color: #00b4d8;
+            color: white;
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 60px;
+            width: auto;
+            object-fit: contain;
+            margin-right: 10px;
+            margin-left: -30px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Parkinson's Detection Content */
+        .parkinson-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .parkinson-container h1 {
+            color: #1a237e;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .parkinson-container p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .form-section {
+            margin-top: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #1a237e;
+        }
+
+        .form-group input, 
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 5px;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .submit-btn {
+            background-color: #1c9eac;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background-color: #15808c;
+        }
+
+        .result-section {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            display: none; /* Hidden by default */
+        }
+
+        .info-box {
+            background-color: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .logo-img {
+                height: 50px;
+                margin-bottom: 10px;
+            }
+            
+            .nav-links {
+                margin-left: 0;
+                width: 100%;
+                justify-content: space-around;
+                gap: 5px;
+            }
+
+            .nav-links a {
+                padding: 6px 8px;
+                font-size: 0.85rem;
+            }
+
+            .parkinson-container {
+                margin: 20px;
+                padding: 15px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation Bar - Same as home page -->
+    <div class="top-bar">
+        <div class="container">
+            <img src="images/logoproj.png" alt="HealthSense AI Logo" class="logo-img">
+            
+            <div class="nav-links">
+                <a href="home.html" id="home">Home</a>
+                <a href="heart.html" id="heart">Heart</a>
+                <a href="malaria.html" id="malaria">Malaria</a>
+                <a href="pneumonia.html" id="pneumonia">Pneumonia</a>
+                <a href="#" id="parkinson" class="active">Parkinson</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Parkinson's Detection Content -->
+    <div class="parkinson-container">
+        <h1><i class="fas fa-brain"></i> Parkinson's Disease Detection</h1>
+        <p>Our AI model analyzes vocal patterns and health parameters to detect early signs of Parkinson's disease with high accuracy. Enter your information below for assessment.</p>
+        
+        <div class="form-section">
+            <form id="parkinsonForm">
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" min="30" max="100" required>
+                    <small>Enter your age between 30-100 years</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sex">Sex:</label>
+                    <select id="sex" name="sex" required>
+                        <option value="">Select</option>
+                        <option value="0">Female</option>
+                        <option value="1">Male</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="jitter">Vocal Jitter (%):</label>
+                    <input type="number" id="jitter" name="jitter" step="0.001" min="0" max="1" required>
+                    <small>Measure of frequency instability in voice (e.g., 0.003)</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="shimmer">Vocal Shimmer (%):</label>
+                    <input type="number" id="shimmer" name="shimmer" step="0.001" min="0" max="1" required>
+                    <small>Measure of amplitude instability in voice (e.g., 0.015)</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="nhr">Noise-to-Harmonics Ratio:</label>
+                    <input type="number" id="nhr" name="nhr" step="0.001" min="0" max="1" required>
+                    <small>Ratio of noise to tonal components in voice (e.g., 0.02)</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="hrt">Harmonics-to-Noise Ratio:</label>
+                    <input type="number" id="hrt" name="hrt" step="0.01" min="0" max="50" required>
+                    <small>Ratio of harmonic to noise components (e.g., 25.65)</small>
+                </div>
+                
+                <button type="submit" class="submit-btn">Analyze for Parkinson's Risk</button>
+            </form>
+        </div>
+        
+        <div class="info-box">
+            <h3><i class="fas fa-info-circle"></i> About Parkinson's Detection</h3>
+            <p>Our model analyzes 16 different vocal features along with demographic information to assess Parkinson's disease risk. Early detection can help manage symptoms and improve quality of life.</p>
+            <p>For accurate results, please provide measurements from a professional voice recording analysis if available.</p>
+        </div>
+        
+        <div class="result-section" id="resultSection">
+            <h2>Analysis Result</h2>
+            <div id="predictionResult"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript for form submission -->
+    <script>
+        document.getElementById('parkinsonForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            const submitBtn = document.querySelector('.submit-btn');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+            submitBtn.disabled = true;
+            
+            // Simulate API processing delay
+            setTimeout(function() {
+                // In a real application, you would send this data to your backend
+                // For demo purposes, we'll show a sample result
+                const riskLevel = Math.random();
+                let resultText, resultColor, bgColor;
+                
+                if (riskLevel > 0.7) {
+                    resultText = 'High Risk of Parkinson\'s Disease';
+                    resultColor = '#ff0000';
+                    bgColor = '#ffcccc';
+                } else if (riskLevel > 0.4) {
+                    resultText = 'Moderate Risk of Parkinson\'s Disease';
+                    resultColor = '#ff9900';
+                    bgColor = '#ffebcc';
+                } else {
+                    resultText = 'Low Risk of Parkinson\'s Disease';
+                    resultColor = '#00aa00';
+                    bgColor = '#ccffcc';
+                }
+                
+                document.getElementById('predictionResult').innerHTML = `
+                    <p>Based on the provided vocal parameters and health information:</p>
+                    <div style="background-color: ${bgColor}; 
+                                padding: 15px; border-radius: 5px; margin: 10px 0; text-align: center;">
+                        <h3 style="color: ${resultColor};">${resultText}</h3>
+                        <p>Risk Score: ${(riskLevel * 100).toFixed(1)}%</p>
+                        ${riskLevel > 0.4 ? 
+                            '<p>We recommend consulting with a neurologist for further evaluation.</p>' : 
+                            '<p>No immediate concerns detected. Maintain regular health checkups.</p>'}
+                    </div>
+                    <p><small>Note: This screening tool is not a definitive diagnosis. Always consult with a medical professional.</small></p>
+                `;
+                
+                document.getElementById('resultSection').style.display = 'block';
+                
+                // Reset button
+                submitBtn.innerHTML = 'Analyze for Parkinson\'s Risk';
+                submitBtn.disabled = false;
+                
+                // Scroll to results
+                document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+            }, 2000); // 2 second delay to simulate processing
+        });
+    </script>
+</body>
+</html>

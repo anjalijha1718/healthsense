@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthSense AI - Pneumonia Detection</title>
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            padding-top: 80px; /* Space for fixed header */
+        }
+
+        /* Top Navigation Bar - Same as home page */
+        .top-bar {
+            background-color: #00b4d8;
+            color: white;
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 60px;
+            width: auto;
+            object-fit: contain;
+            margin-right: 10px;
+            margin-left: -30px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Pneumonia Detection Content */
+        .pneumonia-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .pneumonia-container h1 {
+            color: #1a237e;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .pneumonia-container p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .upload-section {
+            margin-top: 30px;
+            text-align: center;
+            border: 2px dashed #ddd;
+            padding: 40px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            color: #1c9eac;
+            margin-bottom: 15px;
+        }
+
+        .upload-btn {
+            background-color: #1c9eac;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-top: 15px;
+        }
+
+        .upload-btn:hover {
+            background-color: #15808c;
+        }
+
+        #imagePreview {
+            max-width: 100%;
+            max-height: 400px;
+            margin-top: 20px;
+            display: none;
+            border-radius: 4px;
+        }
+
+        .result-section {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            display: none; /* Hidden by default */
+        }
+
+        .instructions {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e3f2fd;
+            border-radius: 8px;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .logo-img {
+                height: 50px;
+                margin-bottom: 10px;
+            }
+            
+            .nav-links {
+                margin-left: 0;
+                width: 100%;
+                justify-content: space-around;
+                gap: 5px;
+            }
+
+            .nav-links a {
+                padding: 6px 8px;
+                font-size: 0.85rem;
+            }
+
+            .pneumonia-container {
+                margin: 20px;
+                padding: 15px;
+            }
+
+            .upload-section {
+                padding: 20px;
+            }
+
+            #imagePreview {
+                max-height: 300px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation Bar - Same as home page -->
+    <div class="top-bar">
+        <div class="container">
+            <img src="images/logoproj.png" alt="HealthSense AI Logo" class="logo-img">
+            
+            <div class="nav-links">
+                <a href="home.html" id="home">Home</a>
+                <a href="heart.html" id="heart">Heart</a>
+                <a href="malaria.html" id="malaria">Malaria</a>
+                <a href="#" id="pneumonia" class="active">Pneumonia</a>
+                <a href="parkinson.html" id="parkinson">Parkinson</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pneumonia Detection Content -->
+    <div class="pneumonia-container">
+        <h1><i class="fas fa-lungs"></i> Pneumonia Detection</h1>
+        <p>Our advanced AI model can detect pneumonia from chest X-ray images with 91.35% accuracy. Upload a chest X-ray image below to analyze for signs of pneumonia.</p>
+        
+        <div class="upload-section">
+            <div class="upload-icon">
+                <i class="fas fa-x-ray"></i>
+            </div>
+            <h3>Upload Chest X-Ray Image</h3>
+            <p>Supported formats: JPG, PNG, JPEG</p>
+            
+            <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+            <button class="upload-btn" onclick="document.getElementById('imageUpload').click()">Select X-Ray Image</button>
+            
+            <img id="imagePreview" alt="Preview of uploaded X-ray">
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <button id="analyzeBtn" class="upload-btn" style="display: none;">Analyze X-Ray</button>
+        </div>
+        
+        <div class="instructions">
+            <h3><i class="fas fa-info-circle"></i> Instructions</h3>
+            <ul>
+                <li>Upload a clear frontal chest X-ray image (PA view preferred)</li>
+                <li>Ensure the entire lung field is visible in the image</li>
+                <li>For best results, use high-quality images without artifacts</li>
+                <li>This tool is not a substitute for professional medical diagnosis</li>
+            </ul>
+        </div>
+        
+        <div class="result-section" id="resultSection">
+            <h2>Analysis Result</h2>
+            <div id="predictionResult"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript for image upload and analysis -->
+    <script>
+        // Image upload preview
+        document.getElementById('imageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const preview = document.getElementById('imagePreview');
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                    document.getElementById('analyzeBtn').style.display = 'inline-block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Analyze button click
+        document.getElementById('analyzeBtn').addEventListener('click', function() {
+            // Show loading state
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            analyzeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+            analyzeBtn.disabled = true;
+            
+            // Simulate API call delay
+            setTimeout(function() {
+                // In a real application, you would send the image to your backend
+                // For demo purposes, we'll just show a sample result
+                document.getElementById('predictionResult').innerHTML = `
+                    <p>Our AI analysis of the chest X-ray shows:</p>
+                    <div style="background-color: ${Math.random() > 0.5 ? '#ffcccc' : '#ccffcc'}; 
+                                padding: 15px; border-radius: 5px; margin: 10px 0; text-align: center;">
+                        <h3 style="color: ${Math.random() > 0.5 ? '#ff0000' : '#00aa00'};">
+                            ${Math.random() > 0.5 ? 'Pneumonia Detected' : 'Normal Lung Findings'}
+                        </h3>
+                        <p>${Math.random() > 0.5 ? 
+                            'The X-ray shows signs consistent with pneumonia. Please consult with a healthcare professional for further evaluation.' : 
+                            'The X-ray appears normal with no signs of pneumonia.'}
+                        </p>
+                        <p>Confidence: ${(Math.random() * 100).toFixed(2)}%</p>
+                    </div>
+                    <p><small>Note: This is a screening tool only. Always consult with a radiologist or physician for definitive diagnosis.</small></p>
+                `;
+                
+                document.getElementById('resultSection').style.display = 'block';
+                
+                // Reset button
+                analyzeBtn.innerHTML = 'Analyze X-Ray';
+                analyzeBtn.disabled = false;
+                
+                // Scroll to results
+                document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+            }, 2000); // 2 second delay to simulate processing
+        });
+    </script>
+</body>
+</html>

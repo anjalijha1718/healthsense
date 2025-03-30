@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthSense AI - Malaria Detection</title>
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            padding-top: 80px; /* Space for fixed header */
+        }
+
+        /* Top Navigation Bar - Same as home page */
+        .top-bar {
+            background-color: #00b4d8;
+            color: white;
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 60px;
+            width: auto;
+            object-fit: contain;
+            margin-right: 10px;
+            margin-left: -30px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Malaria Detection Content */
+        .malaria-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .malaria-container h1 {
+            color: #1a237e;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .malaria-container p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .upload-section {
+            margin-top: 30px;
+            text-align: center;
+            border: 2px dashed #ddd;
+            padding: 40px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            color: #1c9eac;
+            margin-bottom: 15px;
+        }
+
+        .upload-btn {
+            background-color: #1c9eac;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-top: 15px;
+        }
+
+        .upload-btn:hover {
+            background-color: #15808c;
+        }
+
+        #imagePreview {
+            max-width: 100%;
+            max-height: 300px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .result-section {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            display: none; /* Hidden by default */
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .logo-img {
+                height: 50px;
+                margin-bottom: 10px;
+            }
+            
+            .nav-links {
+                margin-left: 0;
+                width: 100%;
+                justify-content: space-around;
+                gap: 5px;
+            }
+
+            .nav-links a {
+                padding: 6px 8px;
+                font-size: 0.85rem;
+            }
+
+            .malaria-container {
+                margin: 20px;
+                padding: 15px;
+            }
+
+            .upload-section {
+                padding: 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation Bar - Same as home page -->
+    <div class="top-bar">
+        <div class="container">
+            <img src="images/logoproj.png" alt="HealthSense AI Logo" class="logo-img">
+            
+            <div class="nav-links">
+                <a href="home.html" id="home">Home</a>
+                <a href="heart.html" id="heart">Heart</a>
+                <a href="#" id="malaria" class="active">Malaria</a>
+                <a href="pneumonia.html" id="pneumonia">Pneumonia</a>
+                <a href="parkinson.html" id="parkinson">Parkinson</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Malaria Detection Content -->
+    <div class="malaria-container">
+        <h1><i class="fas fa-microscope"></i> Malaria Detection</h1>
+        <p>Our advanced AI model can detect malaria from blood cell images with 95.65% accuracy. Upload an image of a blood smear below to analyze for malaria parasites.</p>
+        
+        <div class="upload-section">
+            <div class="upload-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <h3>Upload Blood Cell Image</h3>
+            <p>Supported formats: JPG, PNG, JPEG</p>
+            
+            <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+            <button class="upload-btn" onclick="document.getElementById('imageUpload').click()">Select Image</button>
+            
+            <img id="imagePreview" alt="Preview of uploaded image">
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <button id="analyzeBtn" class="upload-btn" style="display: none;">Analyze Image</button>
+        </div>
+        
+        <div class="result-section" id="resultSection">
+            <h2>Analysis Result</h2>
+            <div id="predictionResult"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript for image upload and analysis -->
+    <script>
+        // Image upload preview
+        document.getElementById('imageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const preview = document.getElementById('imagePreview');
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                    document.getElementById('analyzeBtn').style.display = 'inline-block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Analyze button click
+        document.getElementById('analyzeBtn').addEventListener('click', function() {
+            // In a real application, you would send the image to your backend
+            // For demo purposes, we'll just show a sample result
+            document.getElementById('predictionResult').innerHTML = `
+                <p>Our AI analysis of the blood cell image shows:</p>
+                <div style="background-color: ${Math.random() > 0.5 ? '#ffcccc' : '#ccffcc'}; 
+                            padding: 15px; border-radius: 5px; margin: 10px 0; text-align: center;">
+                    <h3 style="color: ${Math.random() > 0.5 ? '#ff0000' : '#00aa00'};">
+                        ${Math.random() > 0.5 ? 'Malaria Parasites Detected' : 'No Malaria Parasites Found'}
+                    </h3>
+                    <p>${Math.random() > 0.5 ? 
+                        'The image shows signs of malaria infection. Please consult with a healthcare professional immediately.' : 
+                        'The blood sample appears normal with no signs of malaria parasites.'}
+                    </p>
+                    <p>Confidence: ${(Math.random() * 100).toFixed(2)}%</p>
+                </div>
+                <p><small>Note: This is a demo result. For accurate diagnosis, please consult with a medical professional.</small></p>
+            `;
+            
+            document.getElementById('resultSection').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
