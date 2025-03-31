@@ -14,7 +14,7 @@
         }
 
         body {
-            background-color: #f5f7fa;
+            background: linear-gradient(135deg, #e3f2fd, #bbf2fb);
             color: #333;
             padding-top: 80px; /* Space for fixed header */
         }
@@ -136,13 +136,6 @@
             display: none; /* Hidden by default */
         }
 
-        .instructions {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #e3f2fd;
-            border-radius: 8px;
-        }
-
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
             .container {
@@ -219,16 +212,6 @@
         
         <div style="text-align: center; margin-top: 20px;">
             <button id="analyzeBtn" class="upload-btn" style="display: none;">Analyze X-Ray</button>
-        </div>
-        
-        <div class="instructions">
-            <h3><i class="fas fa-info-circle"></i> Instructions</h3>
-            <ul>
-                <li>Upload a clear frontal chest X-ray image (PA view preferred)</li>
-                <li>Ensure the entire lung field is visible in the image</li>
-                <li>For best results, use high-quality images without artifacts</li>
-                <li>This tool is not a substitute for professional medical diagnosis</li>
-            </ul>
         </div>
         
         <div class="result-section" id="resultSection">
