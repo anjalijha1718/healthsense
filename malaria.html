@@ -29,12 +29,6 @@
             top: 0;
             width: 100%;
             z-index: 1000;
-        }
-
-        .container {
-            width: 95%;
-            max-width: 1200px;
-            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -44,14 +38,13 @@
             height: 60px;
             width: auto;
             object-fit: contain;
-            margin-right: 10px;
-            margin-left: -30px;
+            margin-left: 20px; /* Added left margin for logo */
         }
 
         .nav-links {
             display: flex;
             gap: 15px;
-            margin-left: auto;
+            margin-right: 20px; /* Added right margin for nav links */
         }
 
         .nav-links a {
@@ -137,18 +130,19 @@
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            .container {
+            .top-bar {
                 flex-direction: column;
-                align-items: flex-start;
+                padding: 10px;
             }
             
             .logo-img {
                 height: 50px;
-                margin-bottom: 10px;
+                margin: 10px 0;
+                margin-left: 0;
             }
             
             .nav-links {
-                margin-left: 0;
+                margin: 10px 0;
                 width: 100%;
                 justify-content: space-around;
                 gap: 5px;
@@ -174,16 +168,14 @@
 <body>
     <!-- Top Navigation Bar - Same as home page -->
     <div class="top-bar">
-        <div class="container">
-            <img src="images/logoproj.png" alt="HealthSense AI Logo" class="logo-img">
-            
-            <div class="nav-links">
-                <a href="home.html" id="home">Home</a>
-                <a href="heart.html" id="heart">Heart</a>
-                <a href="#" id="malaria" class="active">Malaria</a>
-                <a href="pneumonia.html" id="pneumonia">Pneumonia</a>
-                <a href="parkinson.html" id="parkinson">Parkinson</a>
-            </div>
+        <img src="images/logoproj.png" alt="HealthSense AI Logo" class="logo-img">
+        
+        <div class="nav-links">
+            <a href="home.html" id="home">Home</a>
+            <a href="heart.html" id="heart">Heart</a>
+            <a href="#" id="malaria" class="active">Malaria</a>
+            <a href="pneumonia.html" id="pneumonia">Pneumonia</a>
+            <a href="parkinson.html" id="parkinson">Parkinson</a>
         </div>
     </div>
 
