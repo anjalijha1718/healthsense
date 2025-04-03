@@ -29,6 +29,9 @@
             top: 0;
             width: 100%;
             z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .container {
@@ -44,14 +47,13 @@
             height: 60px;
             width: auto;
             object-fit: contain;
-            margin-right: 10px;
-            margin-left: -30px;
+            margin-left: 20px; /* Added left margin for logo */
         }
 
         .nav-links {
             display: flex;
             gap: 15px;
-            margin-left: auto;
+            margin-right: 20px; /* Added right margin for nav links */
         }
 
         .nav-links a {
@@ -89,57 +91,47 @@
             line-height: 1.6;
         }
 
-        .form-section {
+        .upload-section {
             margin-top: 30px;
+            text-align: center;
+            border: 2px dashed #ddd;
+            padding: 40px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        .upload-icon {
+            font-size: 48px;
+            color: #1c9eac;
+            margin-bottom: 15px;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #1a237e;
-        }
-
-        .form-group input, 
-        .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        .form-group small {
-            display: block;
-            margin-top: 5px;
-            color: #666;
-            font-size: 0.85rem;
-        }
-
-        .submit-btn {
+        .upload-btn {
             background-color: #1c9eac;
             color: white;
             border: none;
-            padding: 14px 30px;
+            padding: 12px 25px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s;
-            margin-top: 20px;
-            width: 100%;
+            margin-top: 15px;
         }
 
-        .submit-btn:hover {
+        .upload-btn:hover {
             background-color: #15808c;
+        }
+
+        #imagePreview {
+            max-width: 100%;
+            max-height: 300px;
+            margin-top: 20px;
+            display: none;
         }
 
         .result-section {
             margin-top: 30px;
-            padding: 25px;
+            padding: 20px;
             border-radius: 8px;
             background-color: #f8f9fa;
             display: none; /* Hidden by default */
@@ -147,18 +139,19 @@
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            .container {
+            .top-bar {
                 flex-direction: column;
-                align-items: flex-start;
+                padding: 10px;
             }
             
             .logo-img {
                 height: 50px;
-                margin-bottom: 10px;
+                margin: 10px 0;
+                margin-left: 0;
             }
             
             .nav-links {
-                margin-left: 0;
+                margin: 10px 0;
                 width: 100%;
                 justify-content: space-around;
                 gap: 5px;
@@ -173,6 +166,10 @@
                 margin: 20px;
                 padding: 15px;
             }
+
+            .upload-section {
+                padding: 20px;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -180,67 +177,37 @@
 <body>
     <!-- Top Navigation Bar - Same as home page -->
     <div class="top-bar">
-        <div class="container">
-            <img src="images/logoproj.png" alt="HealthSense AI Logo" class="logo-img">
-            
-            <div class="nav-links">
-                <a href="home.html" id="home">Home</a>
-                <a href="heart.html" id="heart">Heart</a>
-                <a href="malaria.html" id="malaria">Malaria</a>
-                <a href="pneumonia.html" id="pneumonia">Pneumonia</a>
-                <a href="#" id="parkinson" class="active">Parkinson</a>
-            </div>
+        <img src="images/logoproj.png" alt="HealthSense AI Logo" class="logo-img">
+        
+        <div class="nav-links">
+            <a href="home.html" id="home">Home</a>
+            <a href="heart.html" id="heart">Heart</a>
+            <a href="malaria.html" id="malaria">Malaria</a>
+            <a href="pneumonia.html" id="pneumonia">Pneumonia</a>
+            <a href="#" id="parkinson" class="active">Parkinson</a>
         </div>
     </div>
 
     <!-- Parkinson's Detection Content -->
     <div class="parkinson-container">
         <h1><i class="fas fa-brain"></i> Parkinson's Disease Detection</h1>
-        <p>Our AI model analyzes vocal patterns and health parameters to detect early signs of Parkinson's disease with high accuracy. Enter your information below for assessment.</p>
+        <p>Our AI model analyzes spiral and wave drawing tests to detect early signs of Parkinson's disease with high accuracy. Upload an image of a spiral or wave drawing test below for assessment.</p>
         
-        <div class="form-section">
-            <form id="parkinsonForm">
-                <div class="form-group">
-                    <label for="age">Age:</label>
-                    <input type="number" id="age" name="age" min="30" max="100" required>
-                    <small>Enter your age between 30-100 years</small>
-                </div>
-                
-                <div class="form-group">
-                    <label for="sex">Sex:</label>
-                    <select id="sex" name="sex" required>
-                        <option value="">Select</option>
-                        <option value="0">Female</option>
-                        <option value="1">Male</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="jitter">Vocal Jitter (%):</label>
-                    <input type="number" id="jitter" name="jitter" step="0.001" min="0" max="1" required>
-                    <small>Measure of frequency instability in voice (e.g., 0.003)</small>
-                </div>
-                
-                <div class="form-group">
-                    <label for="shimmer">Vocal Shimmer (%):</label>
-                    <input type="number" id="shimmer" name="shimmer" step="0.001" min="0" max="1" required>
-                    <small>Measure of amplitude instability in voice (e.g., 0.015)</small>
-                </div>
-                
-                <div class="form-group">
-                    <label for="nhr">Noise-to-Harmonics Ratio:</label>
-                    <input type="number" id="nhr" name="nhr" step="0.001" min="0" max="1" required>
-                    <small>Ratio of noise to tonal components in voice (e.g., 0.02)</small>
-                </div>
-                
-                <div class="form-group">
-                    <label for="hrt">Harmonics-to-Noise Ratio:</label>
-                    <input type="number" id="hrt" name="hrt" step="0.01" min="0" max="50" required>
-                    <small>Ratio of harmonic to noise components (e.g., 25.65)</small>
-                </div>
-                
-                <button type="submit" class="submit-btn">Analyze for Parkinson's Risk</button>
-            </form>
+        <div class="upload-section">
+            <div class="upload-icon">
+                <i class="fas fa-draw-polygon"></i>
+            </div>
+            <h3>Upload Spiral or Wave Drawing Test</h3>
+            <p>Supported formats: JPG, PNG, JPEG</p>
+            
+            <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+            <button class="upload-btn" onclick="document.getElementById('imageUpload').click()">Select Image</button>
+            
+            <img id="imagePreview" alt="Preview of uploaded drawing test">
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <button id="analyzeBtn" class="upload-btn" style="display: none;">Analyze Drawing</button>
         </div>
         
         <div class="result-section" id="resultSection">
@@ -249,20 +216,31 @@
         </div>
     </div>
 
-    <!-- JavaScript for form submission -->
+    <!-- JavaScript for image upload and analysis -->
     <script>
-        document.getElementById('parkinsonForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Show loading state
-            const submitBtn = document.querySelector('.submit-btn');
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
-            submitBtn.disabled = true;
+        // Image upload preview
+        document.getElementById('imageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const preview = document.getElementById('imagePreview');
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                    document.getElementById('analyzeBtn').style.display = 'inline-block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Analyze button click
+        document.getElementById('analyzeBtn').addEventListener('click', function() {
+            const btn = this;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+            btn.disabled = true;
             
             // Simulate API processing delay
             setTimeout(function() {
-                // In a real application, you would send this data to your backend
-                // For demo purposes, we'll show a sample result
                 const riskLevel = Math.random();
                 let resultText, resultColor, bgColor;
                 
@@ -281,7 +259,7 @@
                 }
                 
                 document.getElementById('predictionResult').innerHTML = `
-                    <p>Based on the provided vocal parameters and health information:</p>
+                    <p>Based on the analysis of your drawing test:</p>
                     <div style="background-color: ${bgColor}; 
                                 padding: 15px; border-radius: 5px; margin: 10px 0; text-align: center;">
                         <h3 style="color: ${resultColor};">${resultText}</h3>
@@ -296,8 +274,8 @@
                 document.getElementById('resultSection').style.display = 'block';
                 
                 // Reset button
-                submitBtn.innerHTML = 'Analyze for Parkinson\'s Risk';
-                submitBtn.disabled = false;
+                btn.innerHTML = 'Analyze Drawing';
+                btn.disabled = false;
                 
                 // Scroll to results
                 document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
@@ -305,4 +283,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
