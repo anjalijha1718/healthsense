@@ -29,12 +29,6 @@
             top: 0;
             width: 100%;
             z-index: 1000;
-        }
-
-        .container {
-            width: 95%;
-            max-width: 1200px;
-            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -44,14 +38,13 @@
             height: 60px;
             width: auto;
             object-fit: contain;
-            margin-right: 10px;
-            margin-left: -30px;
+            margin-left: 20px;
         }
 
         .nav-links {
             display: flex;
             gap: 15px;
-            margin-left: auto;
+            margin-right: 20px;
         }
 
         .nav-links a {
@@ -122,10 +115,9 @@
 
         #imagePreview {
             max-width: 100%;
-            max-height: 400px;
+            max-height: 300px;
             margin-top: 20px;
             display: none;
-            border-radius: 4px;
         }
 
         .result-section {
@@ -133,23 +125,24 @@
             padding: 20px;
             border-radius: 8px;
             background-color: #f8f9fa;
-            display: none; /* Hidden by default */
+            display: none;
         }
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            .container {
+            .top-bar {
                 flex-direction: column;
-                align-items: flex-start;
+                padding: 10px;
             }
             
             .logo-img {
                 height: 50px;
-                margin-bottom: 10px;
+                margin: 10px 0;
+                margin-left: 0;
             }
             
             .nav-links {
-                margin-left: 0;
+                margin: 10px 0;
                 width: 100%;
                 justify-content: space-around;
                 gap: 5px;
@@ -168,50 +161,44 @@
             .upload-section {
                 padding: 20px;
             }
-
-            #imagePreview {
-                max-height: 300px;
-            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- Top Navigation Bar - Same as home page -->
+    <!-- Top Navigation Bar -->
     <div class="top-bar">
-        <div class="container">
-            <img src="images/logoproj.png" alt="HealthSense AI Logo" class="logo-img">
-            
-            <div class="nav-links">
-                <a href="home.html" id="home">Home</a>
-                <a href="heart.html" id="heart">Heart</a>
-                <a href="malaria.html" id="malaria">Malaria</a>
-                <a href="#" id="pneumonia" class="active">Pneumonia</a>
-                <a href="parkinson.html" id="parkinson">Parkinson</a>
-            </div>
+        <img src="images/logoproj.png" alt="HealthSense AI Logo" class="logo-img">
+        
+        <div class="nav-links">
+            <a href="home.html" id="home">Home</a>
+            <a href="heart.html" id="heart">Heart</a>
+            <a href="malaria.html" id="malaria">Malaria</a>
+            <a href="#" id="pneumonia" class="active">Pneumonia</a>
+            <a href="parkinson.html" id="parkinson">Parkinson</a>
         </div>
     </div>
 
     <!-- Pneumonia Detection Content -->
     <div class="pneumonia-container">
         <h1><i class="fas fa-lungs"></i> Pneumonia Detection</h1>
-        <p>Our advanced AI model can detect pneumonia from chest X-ray images with 91.35% accuracy. Upload a chest X-ray image below to analyze for signs of pneumonia.</p>
+        <p>Our advanced AI model can detect pneumonia from chest X-ray images with high accuracy. Upload a chest X-ray image below for analysis.</p>
         
         <div class="upload-section">
             <div class="upload-icon">
-                <i class="fas fa-x-ray"></i>
+                <i class="fas fa-file-upload"></i>
             </div>
-            <h3>Upload Chest X-Ray Image</h3>
+            <h3>Upload Chest X-ray Image</h3>
             <p>Supported formats: JPG, PNG, JPEG</p>
             
             <input type="file" id="imageUpload" accept="image/*" style="display: none;">
-            <button class="upload-btn" onclick="document.getElementById('imageUpload').click()">Select X-Ray Image</button>
+            <button class="upload-btn" onclick="document.getElementById('imageUpload').click()">Select Image</button>
             
-            <img id="imagePreview" alt="Preview of uploaded X-ray">
+            <img id="imagePreview" alt="Preview of uploaded X-ray image">
         </div>
         
         <div style="text-align: center; margin-top: 20px;">
-            <button id="analyzeBtn" class="upload-btn" style="display: none;">Analyze X-Ray</button>
+            <button id="analyzeBtn" class="upload-btn" style="display: none;">Analyze X-ray</button>
         </div>
         
         <div class="result-section" id="resultSection">
@@ -239,40 +226,42 @@
 
         // Analyze button click
         document.getElementById('analyzeBtn').addEventListener('click', function() {
-            // Show loading state
-            const analyzeBtn = document.getElementById('analyzeBtn');
-            analyzeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
-            analyzeBtn.disabled = true;
+            const btn = this;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+            btn.disabled = true;
             
-            // Simulate API call delay
             setTimeout(function() {
-                // In a real application, you would send the image to your backend
-                // For demo purposes, we'll just show a sample result
+                const hasPneumonia = Math.random() > 0.5;
+                let resultText, resultColor, bgColor;
+                
+                if (hasPneumonia) {
+                    resultText = 'Pneumonia Detected';
+                    resultColor = '#ff0000';
+                    bgColor = '#ffcccc';
+                } else {
+                    resultText = 'No Pneumonia Detected';
+                    resultColor = '#00aa00';
+                    bgColor = '#ccffcc';
+                }
+                
                 document.getElementById('predictionResult').innerHTML = `
-                    <p>Our AI analysis of the chest X-ray shows:</p>
-                    <div style="background-color: ${Math.random() > 0.5 ? '#ffcccc' : '#ccffcc'}; 
+                    <p>Our analysis of the chest X-ray shows:</p>
+                    <div style="background-color: ${bgColor}; 
                                 padding: 15px; border-radius: 5px; margin: 10px 0; text-align: center;">
-                        <h3 style="color: ${Math.random() > 0.5 ? '#ff0000' : '#00aa00'};">
-                            ${Math.random() > 0.5 ? 'Pneumonia Detected' : 'Normal Lung Findings'}
-                        </h3>
-                        <p>${Math.random() > 0.5 ? 
-                            'The X-ray shows signs consistent with pneumonia. Please consult with a healthcare professional for further evaluation.' : 
-                            'The X-ray appears normal with no signs of pneumonia.'}
-                        </p>
-                        <p>Confidence: ${(Math.random() * 100).toFixed(2)}%</p>
+                        <h3 style="color: ${resultColor};">${resultText}</h3>
+                        <p>Confidence: ${(Math.random() * 100).toFixed(1)}%</p>
+                        ${hasPneumonia ? 
+                            '<p>Signs of pneumonia were detected. Please consult with a healthcare professional immediately.</p>' : 
+                            '<p>The X-ray appears normal with no signs of pneumonia.</p>'}
                     </div>
-                    <p><small>Note: This is a screening tool only. Always consult with a radiologist or physician for definitive diagnosis.</small></p>
+                    <p><small>Note: This is a screening tool, not a definitive diagnosis. Consult a doctor for medical advice.</small></p>
                 `;
                 
                 document.getElementById('resultSection').style.display = 'block';
-                
-                // Reset button
-                analyzeBtn.innerHTML = 'Analyze X-Ray';
-                analyzeBtn.disabled = false;
-                
-                // Scroll to results
+                btn.innerHTML = 'Analyze X-ray';
+                btn.disabled = false;
                 document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
-            }, 2000); // 2 second delay to simulate processing
+            }, 2000);
         });
     </script>
 </body>
